@@ -1015,11 +1015,17 @@ div.cell {
   }
 
   div.cell_output::before {
-    content: "运行输出";
     font-size: 80%;
     background-color: #f3f4f5;
     padding: 2px 5px;
     border-radius: 0.25rem;
+
+    &:lang(zh) {
+      content: "运行输出";
+    }
+    &:lang(en) {
+      content: "Output";
+    }
   }
 
   &.tag_output_scroll,
