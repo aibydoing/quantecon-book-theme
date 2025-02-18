@@ -14,7 +14,12 @@
 'fullscreen': '全屏',
 'increase_font': '增加字体大小',
 'decrease_font': '减小字体大小',
-'home': '主页'
+'home': '主页',
+'footer_work_by': '本作品由',
+'footer_created_by': '创作，采用',
+'footer_license': '署名-非商业性使用-禁止演绎 4.0 国际',
+'footer_and': '及',
+'footer_additional_terms': '补充许可协议'
 },
 'en': {
 'back_to_top': 'Back to Top',
@@ -30,12 +35,18 @@ search engine ranking of this site.',
 'fullscreen': 'Fullscreen',
 'increase_font': 'Increase Font Size',
 'decrease_font': 'Decrease Font Size',
-'home': 'Home'
+'home': 'Home',
+'footer_work_by': 'This work by',
+'footer_created_by': 'is licensed under',
+'footer_license': 'CC BY-NC-ND 4.0 International',
+'footer_and': 'and',
+'footer_additional_terms': 'Additional Terms'
 }
 } -%}
 
 {%- set current_lang = lang|default('en') -%}
 {%- set t = i18n[current_lang] -%}
+{%- set site_url = 'https://en.aibydoing.com' if current_lang == 'en' else 'https://aibydoing.com' -%}
 
 {% block css %}
 <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
@@ -86,10 +97,10 @@ search engine ranking of this site.',
 <meta name="author" context="{{ author | e }}" />
 <meta name="keywords" content="{{ theme_keywords | e }}" />
 <meta name="description" content="{{ theme_description | e }}" />
-<link rel="canonical" href="https://aibydoing.com/{{pagename}}" />
+<link rel="canonical" href="{{ site_url }}/{{pagename}}" />
 
 <!-- sitemap -->
-<link rel="sitemap" type="application/xml" title="Sitemap" href="https://aibydoing.com/sitemap.xml" />
+<link rel="sitemap" type="application/xml" title="Sitemap" href="{{ site_url }}/sitemap.xml" />
 
 <!-- Twitter tags -->
 <meta name="twitter:card" content="summary_large_image" />
@@ -102,7 +113,7 @@ search engine ranking of this site.',
 <!-- Opengraph tags -->
 <meta property="og:title" content="{% if pagetitle %}{{ pagetitle | e }}{% else %}{{ docstitle | e }}{% endif %}" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://aibydoing.com/{{pagename}}" />
+<meta property="og:url" content="{{ site_url }}/{{pagename}}" />
 <meta property="og:image" content="{{ theme_twitter_logo_url | e }}" />
 <meta property="og:description" content="{{ theme_description | e }}" />
 <meta property="og:site_name" content="{{ docstitle | e }}" />
@@ -145,7 +156,7 @@ endblock %} {% block relbar1 %}{% endblock %} {% block relbar2 %}{% endblock %}
                             <a href="{{ master_url }}">{{ docstitle | e }}</a>
                         </p>
                         <p class="qe-page__header-subheading">
-                            <a href="https://aibydoing.com/{{pagename}}">{{ pagetitle | e }}</a>
+                            <a href="{{ site_url }}/{{pagename}}">{{ pagetitle | e }}</a>
                         </p>
                     </div>
                     <p class="qe-page__header-authors">{{ author }}</p>
@@ -164,7 +175,7 @@ endblock %} {% block relbar1 %}{% endblock %} {% block relbar2 %}{% endblock %}
               color: #555;
               margin: unset;
             ">
-                            ○ {{ t.share_tips }}<a href="https://aibydoing.com/{{pagename}}">{{ t.share_tips_text }}</a>
+                            ○ {{ t.share_tips }}<a href="{{ site_url }}/{{pagename}}">{{ t.share_tips_text }}</a>
                         </p>
                         <!-- share tips -->
                     </div>
@@ -204,14 +215,14 @@ endblock %} {% block relbar1 %}{% endblock %} {% block relbar2 %}{% endblock %}
 
                 <footer class="qe-page__footer">
                     <p xmlns:cc="http://creativecommons.org/ns#">
-                        本作品由
+                        {{ t.footer_work_by }}
                         <a href="https://huhuhang.com" target="_blank">{{ author }}</a>
-                        创作，采用
-                        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh-hans" target="_blank"
-                            rel="license noopener noreferrer" style="display: inline-block">署名-非商业性使用-禁止演绎 4.0 国际</a>
-                        及
-                        <a href="https://aibydoing.com/intro#id2" target="_blank" rel="license noopener noreferrer"
-                            style="display: inline-block">补充许可协议</a>
+                        {{ t.footer_created_by }}
+                        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"
+                            rel="license noopener noreferrer" style="display: inline-block">{{ t.footer_license }}</a>
+                        {{ t.footer_and }}
+                        <a href="{{ site_url }}/intro#id2" target="_blank" rel="license noopener noreferrer"
+                            style="display: inline-block">{{ t.footer_additional_terms }}</a>
                     </p>
                 </footer>
                 <!-- .page__footer -->
@@ -225,7 +236,7 @@ endblock %} {% block relbar1 %}{% endblock %} {% block relbar2 %}{% endblock %}
                 <div class="qe-sidebar bd-sidebar inactive" id="site-navigation">
                     {%- endif %}
 
-                    <div class="qe-sidebar__header">目录</div>
+                    <div class="qe-sidebar__header">{{ t.toc }}</div>
 
                     <nav class="qe-sidebar__nav" id="qe-sidebar-nav" aria-label="Main navigation">
                         {{ sbt_generate_toctree_html(include_item_names=False,
@@ -246,7 +257,7 @@ endblock %} {% block relbar1 %}{% endblock %} {% block relbar2 %}{% endblock %}
                             <i data-feather="menu"></i>
                         </li>
                         <li data-tippy-content="{{ t.home }}" class="btn__home">
-                            <a href="https://aibydoing.com"><i data-feather="home"></i></a>
+                            <a href="{{ site_url }}"><i data-feather="home"></i></a>
                         </li>
                     </ul>
 
