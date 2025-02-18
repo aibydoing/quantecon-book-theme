@@ -5,9 +5,8 @@ IMPORTS
 */
 
 @import url("https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.7.0/style.css");
-@import url("https://cdn.aibydoing.com/fonts/Merriweather2.css");
-@import url("https://cdn.aibydoing.com/fonts/SmileySans2.css");
-@import url("https://cdn.aibydoing.com/fonts/IBMPlexMono2.css");
+@import url("https://cdn.jsdelivr.net/npm/cn-fontsource-smiley-sans-oblique-regular/font.css");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap");
 
 $breakpoint-xl: 1200px;
 $breakpoint-lg: 992px;
@@ -88,6 +87,9 @@ body {
   color: $color-body;
   font-family: "Merriweather", "LXGW WenKai Lite", -apple-system,
     "Microsoft Yahei";
+  &:lang(en) {
+    font-family: "Merriweather", -apple-system;
+  }
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -228,6 +230,9 @@ pre {
   word-wrap: break-word;
   font-family: "IBM Plex Mono", "Smiley Sans Oblique", -apple-system,
     "Microsoft Yahei" !important;
+  &:lang(en) {
+    font-family: "IBM Plex Mono", -apple-system !important;
+  }
 }
 
 cite,
