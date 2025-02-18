@@ -203,6 +203,10 @@ document.addEventListener("DOMContentLoaded", function () {
   function setFontSize() {
     // Get font size from local storage
     var toolbarFont = localStorage.toolbarFont;
+    // 默认值为 0
+    if (toolbarFont == null) {
+      toolbarFont = 0;
+    }
     if (toolbarFont == 1) {
       $("html").addClass("font-plus");
     } else if (toolbarFont == -1) {
@@ -318,51 +322,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Notebook Launcher popup
-  if (document.getElementById("settingsButton")) {
-    const template = document.getElementById("settingsModal");
-    template.style.display = "block";
-    tippy("#settingsButton", {
-      content: template,
-      theme: "light-border",
-      animation: "shift-away",
-      inertia: true,
-      duration: [200, 200],
-      arrow: true,
-      arrowType: "round",
-      delay: [200, 200],
-      interactive: true,
-      trigger: "click",
-    });
-  }
-
-  // onchangeListener for launcher popup
-  window.onChangeListener = () => {
-    let privateInput = document.getElementById("launcher-private-input").value;
-    if (
-      $(this.event.currentTarget)[0].getAttribute("id").indexOf("private") > -1
-    ) {
-      if (!privateInput.includes("http") && !privateInput.includes("https")) {
-        privateInput = "http://" + privateInput;
-      }
-      let pagename = document
-        .getElementsByClassName("page")[0]
-        .getAttribute("id");
-      let repo = document.getElementById("launcher-private-input").dataset
-        .repourl;
-      let urlpath = document.getElementById("launcher-private-input").dataset
-        .urlpath;
-      const repoPrefix =
-        "/user-redirect/git-pull?repo=" + repo + "&urlpath=" + urlpath;
-      url = privateInput + repoPrefix + pagename + ".ipynb";
-      launchButton.getElementsByTagName("a")[0].setAttribute("href", url);
-    } else {
-      let url = document.getElementById("launcher-public-input").value;
-      let launchButton = document.getElementById("launchButton");
-      launchButton.getElementsByTagName("a")[0].setAttribute("href", url);
-    }
-  };
-
   /**
    * remove the search hint for now
    */
@@ -372,72 +331,6 @@ document.addEventListener("DOMContentLoaded", function () {
       f.querySelector(".search-button__kbd-shortcut").remove(),
     );
   })();
-
-  /**
-   * Add authors to the heading of toc page
-   */
-  (function () {
-    const authors = document.getElementsByClassName(
-      "qe-page__header-authors",
-    )[0];
-    const fontSize = authors.getAttribute("font-size");
-    const h1 = document.querySelector(".main-index h1");
-
-    // check if its the main toc page
-    if (!h1) {
-      return;
-    }
-    // creating a p tag for styling and author links
-    const newParagraph = document.createElement("p");
-    newParagraph.setAttribute("id", "qe-page-author-links");
-    newParagraph.setAttribute(
-      "style",
-      fontSize ? `font-size: ${fontSize}px` : "",
-    );
-
-    //check if there are authors
-    const isAuthor =
-      authors &&
-      ((authors.querySelectorAll("a").length &&
-        authors.querySelectorAll("a")[0].innerText !== "") ||
-        authors.innerText !== "");
-    if (isAuthor) {
-      newParagraph.innerHTML = authors.innerHTML;
-    }
-    // insert p tag after h1, even if no authors for styling
-    h1.insertAdjacentElement("afterend", newParagraph);
-  })();
-
-  // Intersection Observer for hiding 'Back To Top' when overlapping margins
-  const Margin = document.getElementsByClassName("margin");
-  const figCaption = document.querySelectorAll(
-    "figure.margin-caption figcaption",
-  );
-  const BackToTop = document.getElementsByClassName("qe-page__toc-footer")[0];
-
-  const targetElements = Array.from(Margin).concat(Array.from(figCaption));
-  // Function to be called when the intersection changes
-  const handleIntersection = (entries, observer) => {
-    entries.forEach((entry) => {
-      // If the target element is intersecting with the certain div
-      if (entry.isIntersecting) {
-        // Hide the element
-        BackToTop.style.display = "none";
-      } else {
-        // Show the element
-        BackToTop.style.display = "";
-      }
-    });
-  };
-
-  // Create the Intersection Observer
-  const observer = new IntersectionObserver(handleIntersection, {
-    root: null, // observing intersections relative to the viewport
-    rootMargin: "0px 0px -80% 0px", // when the targetElement is 80% above the viewport
-  });
-
-  // Start observing the target elements
-  Array.from(targetElements).forEach((el) => observer.observe(el));
 
   // Tooltips
   tippy("[data-tippy-content]", {
