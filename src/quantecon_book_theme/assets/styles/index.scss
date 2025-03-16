@@ -87,9 +87,6 @@ body {
   color: $color-body;
   font-family: "Merriweather", "LXGW WenKai Lite", -apple-system,
     "Microsoft Yahei";
-  &:lang(en) {
-    font-family: "Merriweather", -apple-system;
-  }
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -105,6 +102,10 @@ body {
 
   .logo-img {
     display: block;
+  }
+
+  div.cell div.cell_input {
+    border: unset !important;
   }
 
   .cell_output .output.text_plain,
@@ -225,9 +226,6 @@ pre {
   word-wrap: break-word;
   font-family: "IBM Plex Mono", "Smiley Sans Oblique", -apple-system,
     "Microsoft Yahei" !important;
-  &:lang(en) {
-    font-family: "IBM Plex Mono", -apple-system !important;
-  }
 }
 
 cite,
@@ -1010,17 +1008,11 @@ div.cell {
   }
 
   div.cell_output::before {
+    content: "运行输出";
     font-size: 80%;
     background-color: #f3f4f5;
     padding: 2px 5px;
     border-radius: 0.25rem;
-
-    &:lang(zh) {
-      content: "运行输出";
-    }
-    &:lang(en) {
-      content: "Output";
-    }
   }
 
   &.tag_output_scroll,
